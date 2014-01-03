@@ -5,17 +5,22 @@ into the appropriate Program Files location, and creates a Start
 menu entry containing all of the GUI programs.'''
 
 from argparse import ArgumentParser
+from logging import basicConfig, error, info, INFO
 from os import environ, makedirs, unlink, walk
 from os.path import isdir, join
 from platform import python_version_tuple
-from requests import get
 from shutil import rmtree
 from StringIO import StringIO
+from sys import exit
 from zipfile import ZipFile
 
-from logging import basicConfig, error, info, INFO
-import pefile
-import win32com.client
+try:
+    from requests import get
+    import pefile
+    import win32com.client
+except ImportError:
+    error('modules are missing; run "easy_install requests pefile pywin32"')
+    exit(1)    
 
 class Installer(object):
         
